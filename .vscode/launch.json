@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch ShoppingcartApplication",
+            "request": "launch",
+            "mainClass": "com.ssmph.shoppingcart.ShoppingcartApplication",
+            "projectName": "backend"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ShoppingcartApplication<shoppingcart>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.ssmph.shoppingcart.ShoppingcartApplication",
+            "projectName": "shoppingcart",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
