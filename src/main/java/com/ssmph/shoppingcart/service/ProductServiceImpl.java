@@ -26,12 +26,12 @@ public class ProductServiceImpl implements ProductService {
         return (List<Product>) productRepository.findAll();
     }
 
-    public Optional<Product> getById(Long id) {
+    public Optional<Product> getById(String id) {
         return productRepository.findById(id) ;
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(String id) {
         productRepository.deleteById(id);
     }
     

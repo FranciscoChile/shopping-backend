@@ -1,10 +1,10 @@
 package com.ssmph.shoppingcart.repository;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import com.ssmph.shoppingcart.model.OrderLineItem;
 
-import org.springframework.data.repository.CrudRepository;
-
-public interface OrderLineItemRepository extends CrudRepository<OrderLineItem, Long> {
+public interface OrderLineItemRepository extends MongoRepository<OrderLineItem, Long> {
     
 
 }

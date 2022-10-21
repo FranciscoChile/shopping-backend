@@ -1,9 +1,9 @@
 package com.ssmph.shoppingcart.repository;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import com.ssmph.shoppingcart.model.Product;
 
-import org.springframework.data.repository.CrudRepository;
-
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends MongoRepository<Product, String> {
     
 }

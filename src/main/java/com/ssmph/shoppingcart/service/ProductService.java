@@ -10,11 +10,11 @@ import com.ssmph.shoppingcart.model.Product;
  */
 public interface ProductService {
 
-    Optional<Product> getById(Long id);
+    Optional<Product> getById(String id);
 
     Product save(Product product);
 
-    void delete(Long id);
+    void delete(String id);
 
     List<Product> list();
     

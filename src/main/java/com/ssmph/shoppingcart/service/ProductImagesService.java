@@ -1,13 +1,11 @@
 package com.ssmph.shoppingcart.service;
 
-import java.util.List;
-
-import com.ssmph.shoppingcart.model.ProductImages;
+import com.ssmph.shoppingcart.model.ProductImage;
 
 public interface ProductImagesService {
 
-    ProductImages saveProductImages(ProductImages productImages);
+    ProductImage saveProductImages(ProductImage productImages);
 
-    List<ProductImages> findAllProductImagesBySku(String skuProduct);
+    
     
 }

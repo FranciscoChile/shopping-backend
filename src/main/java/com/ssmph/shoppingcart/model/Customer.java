@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -23,13 +20,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customers")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Customer {
     
     @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
     private String name;
     private String email;
@@ -38,6 +33,7 @@ public class Customer {
     private String city;
     private String country;
     private Boolean active;
+    private String profileImg;
 
     @OneToMany(
         mappedBy = "customer",
@@ -45,7 +41,10 @@ public class Customer {
     )
     List<Order> orders = new ArrayList<>();
 
-    public Customer(String name, String email, String phone, String address, String city, String country, Boolean active) {
+    public Customer(
+        String name, String email, String phone, 
+        String address, String city, String country, Boolean active
+    ) {
      this.name = name;
      this.email = email;
      this.phone = phone;

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssmph.shoppingcart.model.Product;
-import com.ssmph.shoppingcart.model.ProductImages;
+import com.ssmph.shoppingcart.model.ProductImage;
 import com.ssmph.shoppingcart.service.ProductImagesService;
 import com.ssmph.shoppingcart.service.ProductService;
 import com.ssmph.shoppingcart.storage.StorageService;
@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 public class ProductController {
     
 	@Value("${ruta.imagenes.path}")
@@ -56,7 +56,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public Product get(@PathVariable long id) {
+	public Product get(@PathVariable String id) {
 		try {
 			Optional<Product> product = productService.getById(id);
 			return product.get();	
@@ -66,7 +66,7 @@ public class ProductController {
 	}
     
 	@DeleteMapping(value="/{id}")
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable String id) {
 		try {
 			productService.delete(id);
 		} catch(Exception e) {
@@ -106,7 +106,7 @@ public class ProductController {
 
 				if (opt != null) {
 					Product pp = opt;	
-					ProductImages pi = new ProductImages();
+					ProductImage pi = new ProductImage();
 					pi.setIdProduct(pp.getId());
 					pi.setImageProductName(file.getOriginalFilename());
 					pi.setSkuProduct(product.getSku());

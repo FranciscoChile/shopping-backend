@@ -1,14 +1,11 @@
 package com.ssmph.shoppingcart.service;
 
-import java.util.List;
-
-import com.ssmph.shoppingcart.model.ProductImages;
-import com.ssmph.shoppingcart.repository.ProductImagesRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ssmph.shoppingcart.model.ProductImage;
+import com.ssmph.shoppingcart.repository.ProductImagesRepository;
 
 /**
  * ProductImagesServiceImpl
@@ -20,13 +17,10 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     private ProductImagesRepository productImagesRepository;
 
     @Transactional
-    public ProductImages saveProductImages(ProductImages productImages) {
+    public ProductImage saveProductImages(ProductImage productImages) {
         return productImagesRepository.save(productImages);
     }
 
-    @Transactional
-    public List<ProductImages> findAllProductImagesBySku(String skuProduct) throws DataAccessException {
-        return productImagesRepository.findAllProductImagesBySku(skuProduct);
-    }
+
     
 }
