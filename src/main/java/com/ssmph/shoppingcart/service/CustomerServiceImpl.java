@@ -1,6 +1,7 @@
 package com.ssmph.shoppingcart.service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,18 +36,34 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Customer save(Customer customer, MultipartFile file) throws IOException {
 
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        Customer c = save(customer);
+
+        if (c.getProfileImg()  != null) {
+            int i = c.getProfileImg().lastIndexOf("/");
+            String fullPath  = c.getProfileImg();
+            String profilefileName = fullPath.substring(i+1);
+
+            BlobId blobId = BlobId.of("ssmph-profile-images", profilefileName);        
+            storage.delete(blobId);        
+        }
+
         if (file != null) {
-            Storage storage = StorageOptions.getDefaultInstance().getService();
-            BlobId blobId = BlobId.of("ssmph-profile-images", file.getOriginalFilename());
+            String extension = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+            String fileName = c.getId() + new Date().getTime() + extension;
+
+            BlobId blobId = BlobId.of("ssmph-profile-images", fileName);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
             storage.create(blobInfo, file.getBytes());    
 
-            String profileImg = "https://storage.googleapis.com/ssmph-profile-images/" + file.getOriginalFilename();
-            customer.setProfileImg(profileImg);    
+            String profileImg = "https://storage.googleapis.com/ssmph-profile-images/" + fileName;
+            c.setProfileImg(profileImg);
+
+            save(c);
         }
 
-
-        return customerRepository.save(customer);
+        return c;
     }
 
     @Transactional
@@ -55,13 +72,16 @@ public class CustomerServiceImpl implements CustomerService {
         orderRepository.deleteAll(customer.get().getOrders());
         customerRepository.deleteById(id);
 
-        int i = customer.get().getProfileImg().lastIndexOf("/");
-        String fullPath  = customer.get().getProfileImg();
-        String profilefileName = fullPath.substring(i+1);
+        if (customer.get().getProfileImg() != null) {
+            int i = customer.get().getProfileImg().lastIndexOf("/");
+            String fullPath  = customer.get().getProfileImg();
+            String profilefileName = fullPath.substring(i+1);
 
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-        BlobId blobId = BlobId.of("ssmph-profile-images", profilefileName);        
-        storage.delete(blobId);        
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+            BlobId blobId = BlobId.of("ssmph-profile-images", profilefileName);        
+            storage.delete(blobId);        
+        }
+
     }
 
     

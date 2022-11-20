@@ -22,18 +22,19 @@ public class Product {
 	private String id;
 
     private String sku;
-	private String nameProduct;
+	private String name;
 	private Double priceList;
 	private Double priceSell;
 	private String description;
 	private Long stock;
 	private String category;
 	private int active;
+	private String profileImg;
 	
-	public Product(String sku, String nameProduct, Double priceList, Double priceSell, String description, Long stock,
+	public Product(String sku, String name, Double priceList, Double priceSell, String description, Long stock,
 			String category, int active) {
 		this.sku = sku;
-		this.nameProduct = nameProduct;
+		this.name = name;
 		this.priceList = priceList;
 		this.priceSell = priceSell;
 		this.description = description;

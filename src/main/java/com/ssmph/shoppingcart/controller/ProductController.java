@@ -1,16 +1,8 @@
 package com.ssmph.shoppingcart.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssmph.shoppingcart.model.Product;
-import com.ssmph.shoppingcart.model.ProductImage;
-import com.ssmph.shoppingcart.service.ProductImagesService;
-import com.ssmph.shoppingcart.service.ProductService;
-import com.ssmph.shoppingcart.storage.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssmph.shoppingcart.model.Product;
+import com.ssmph.shoppingcart.service.ProductService;
+
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
@@ -36,12 +32,6 @@ public class ProductController {
 	
     @Autowired
 	private ProductService productService;
-    
-	@Autowired
-    private StorageService storageService;
-
-	@Autowired
-	private ProductImagesService productImagesService;
 
 
     @GetMapping
@@ -84,38 +74,23 @@ public class ProductController {
 		}
     }
 	
-	@PostMapping(value="/multiple-images")
-	public void saveProductMultipleImages(
+	@PostMapping(value="/save-multiple-images")
+	@ResponseStatus(value = HttpStatus.OK)
+	public Product saveWithImages(
 		@RequestParam("product") String p, 
-		@RequestParam(value = "files", required=false) MultipartFile[] files
-	) throws JsonMappingException, JsonProcessingException {
+		@RequestParam(value = "image", required=false) MultipartFile[] files
+	) throws IOException {
 
 		ObjectMapper mapper = new ObjectMapper();			
-		Product product = mapper.readValue(p, Product.class);
-		Product opt = save(product);
+		Product c = mapper.readValue(p, Product.class);
 
-		//Optional<Product> opt = productService.getProductById(product.getIdProduct());
-
-		if (files!=null && files.length > 0) {
-			storageService.createSubDirectory(product.getSku());
-
-			for (int i=0; i < files.length; i++) {
-				MultipartFile file = files[i];
-
-				storageService.store(product.getSku(), file);
-
-				if (opt != null) {
-					Product pp = opt;	
-					ProductImage pi = new ProductImage();
-					pi.setIdProduct(pp.getId());
-					pi.setImageProductName(file.getOriginalFilename());
-					pi.setSkuProduct(product.getSku());
-
-					productImagesService.saveProductImages(pi);
-				}
-			}
-		
+		if (files == null) {
+			return productService.save(c);
 		}
+		else {
+			return productService.save(c, files[0]);
+		}
+		
 
 	}
 	
