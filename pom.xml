@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ssmph</groupId>
-	<artifactId>shopping-backend</artifactId>
+	<artifactId>shopping-back</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shopping-backend</name>
+	<name>shopping-back</name>
 	<description>Shopping</description>
 
     <properties>

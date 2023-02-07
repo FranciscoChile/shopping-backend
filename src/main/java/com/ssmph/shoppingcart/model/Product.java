@@ -29,7 +29,7 @@ public class Product {
 	private Long stock;
 	private String category;
 	private int active;
-	private String profileImg;
+	private String imageUrl;
 	
 	public Product(String sku, String name, Double priceList, Double priceSell, String description, Long stock,
 			String category, int active) {

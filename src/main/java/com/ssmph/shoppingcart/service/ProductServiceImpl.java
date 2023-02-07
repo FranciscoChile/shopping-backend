@@ -30,9 +30,9 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = save(product);
 
-        if (p.getProfileImg()  != null) {
-            int i = p.getProfileImg().lastIndexOf("/");
-            String fullPath  = p.getProfileImg();
+        if (p.getImageUrl()  != null) {
+            int i = p.getImageUrl().lastIndexOf("/");
+            String fullPath  = p.getImageUrl();
             String profilefileName = fullPath.substring(i+1);
 
             BlobId blobId = BlobId.of("ssmph-profile-images", profilefileName);        
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
             storage.create(blobInfo, file.getBytes());    
 
             String profileImg = "https://storage.googleapis.com/ssmph-product-images/" + fileName;
-            p.setProfileImg(profileImg);   
+            p.setImageUrl(profileImg);   
             
             save(p);
         }
@@ -74,9 +74,9 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> prod = getById(id);
         productRepository.deleteById(id);
 
-        if (prod.get().getProfileImg() != null) {
-            int i = prod.get().getProfileImg().lastIndexOf("/");
-            String fullPath  = prod.get().getProfileImg();
+        if (prod.get().getImageUrl() != null) {
+            int i = prod.get().getImageUrl().lastIndexOf("/");
+            String fullPath  = prod.get().getImageUrl();
             String profilefileName = fullPath.substring(i+1);
 
             Storage storage = StorageOptions.getDefaultInstance().getService();

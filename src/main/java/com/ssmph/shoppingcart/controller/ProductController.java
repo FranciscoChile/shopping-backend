@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssmph.shoppingcart.model.Product;
 import com.ssmph.shoppingcart.service.ProductService;
 
+//@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
